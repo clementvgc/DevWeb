@@ -28,3 +28,9 @@ Modification de la vue about et contact dans views.py
 Création de about.html et contact.html
 Modification de style.css
 Test de l'appli, tout fonctionne bien
+
+# Séance 4 :
+Création de base.html
+Modification de index.html, about.html et contact.html afin d'ajoute le template qui évite les répétitions de code
+Ajout des images dans static/images/
+Modification de views.py, notamment de l'index et ajout de la fonction getAuteurs()
