@@ -1,16 +1,19 @@
 from .app import app
+from flask import render_template
 
 @app.route('/')
+@app.route('/index/')
 def index():
-    return "Hello world !"
+    return render_template("index.html", title="R3.01 Dev Web avec Flask", name="Cricri"
+    )
 
-@app.route('/about')
+@app.route('/about/')
 def about():
-    return app.config['ABOUT']
+    return render_template("about.html", title="À propos")
 
-@app.route('/contact')
+@app.route('/contact/')
 def contact():
-    return "Voici mon contact : 06 58 93 25 78"
+    return render_template("contact.html", title="Contact", numero="07 23 34 31 28")
 
 if __name__ == "__main__":
     app.run()
