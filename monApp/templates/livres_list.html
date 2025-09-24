@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block main %}
+<h1>Liste des livres</h1>
+<p>Nombre total de livres : {{ livres|length }}</p>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Titre</th>
+            <th>Prix</th>
+            <th>URL</th>
+            <th>Première de couverture</th>
+            <th>Auteur</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for livre in livres %}
+        <tr>
+            <td>{{ livre.idL }}</td>
+            <td>{{ livre.Titre }}</td>
+            <td>{{ livre.Prix }}€</td>
+            <td><a href="{{ livre.Url }}" target="_blank">{{ livre.Url }}</a></td>
+            <td><img src="{{ url_for('static', filename='images/' + livre.Img) }}" alt="Couverture" width="50" height="75"></td>
+            <td>{{ livre.auteur.Nom }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

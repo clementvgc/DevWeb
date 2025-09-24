@@ -19,7 +19,7 @@ Enfin j'ai encore été dans le shell Flask en faisant des requêtes permettant 
 J'ai pu faire le TP2 en entier durant cette séance.
 
 # Séance 3 :
-
+TP3
 Création du fichier index.html dans le dossier templates
 Modification de la vue index dans le fichier views.py
 Création du fichier style.css dans le dossier static 
@@ -28,9 +28,19 @@ Modification de la vue about et contact dans views.py
 Création de about.html et contact.html
 Modification de style.css
 Test de l'appli, tout fonctionne bien
-
-# Séance 4 :
+TP4
 Création de base.html
 Modification de index.html, about.html et contact.html afin d'ajoute le template qui évite les répétitions de code
 Ajout des images dans static/images/
 Modification de views.py, notamment de l'index et ajout de la fonction getAuteurs()
+
+# Séance 4 :
+Modification de index.html car un de mes url_for() était mauvais
+Création de livres_list.html
+Ajout de la fonction getLivres() dans views.py
+Prise en main de bootstrap
+Modification de app.py pour lancer avec Bootstrap
+Remplacement complet du code de base.html
+Modification de style.css
+Fin TP4
+
