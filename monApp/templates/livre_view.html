@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block main %}
+<h1>Détails du livre</h1>
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">{{ selectedLivre.Titre }}</h5>
+        <p class="card-text"><strong>Prix :</strong> {{ selectedLivre.Prix }}€</p>
+        <p class="card-text"><strong>Auteur :</strong> {{ selectedLivre.auteur.Nom }}</p>
+        <p class="card-text"><strong>URL :</strong> <a href="{{ selectedLivre.Url }}" target="_blank">{{ selectedLivre.Url }}</a></p>
+        <div class="text-center">
+            <img src="{{ url_for('static', filename='images/' + selectedLivre.Img) }}" alt="Couverture" class="img-fluid" style="max-height: 300px;">
+        </div>
+    </div>
+</div>
+<div class="mt-3">
+    <a href="{{ url_for('updateLivre', idL=selectedLivre.idL) }}" class="btn btn-warning">Editer</a>
+    <a href="{{ url_for('getLivres') }}" class="btn btn-secondary">Retour à la liste</a>
+</div>
+{% endblock %}

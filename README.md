@@ -44,3 +44,16 @@ Remplacement complet du code de base.html
 Modification de style.css
 Fin TP4
 
+# Séance 5 :
+TP5
+Téléchargement de WTForms dans Flask
+Création de forms.py
+Ajout d'une fonction dans views.py pour modifier un auteur
+Création de auteur_update.html
+Ajout d'une fonction pour sauvegarder les modifications d'un auteur et d'une autre pour voir si les modifications ont bien été sauvegardées
+Création de auteur_view.html
+Ajout de plusieurs fonctions dans views.py et création/modification de plusieurs teamplates
+On a désormais la possibilité de voir, éditer et supprimer des auteurs
+Possiblilité de voir et éditer les livres
+
+

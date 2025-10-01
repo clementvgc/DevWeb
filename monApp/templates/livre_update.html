@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block main %}
+<h1>Modifier le prix du livre</h1>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <h5 class="card-title">{{ selectedLivre.Titre }}</h5>
+        <p class="card-text"><strong>Auteur :</strong> {{ selectedLivre.auteur.Nom }}</p>
+        <p class="card-text"><strong>URL :</strong> <a href="{{ selectedLivre.Url }}" target="_blank">{{ selectedLivre.Url }}</a></p>
+        <div class="text-center">
+            <img src="{{ url_for('static', filename='images/' + selectedLivre.Img) }}" alt="Couverture" width="100" height="150">
+        </div>
+    </div>
+</div>
+
+<form method="POST" action="{{ url_for('saveLivre') }}">
+    {{ updateForm.hidden_tag() }}
+    <div class="mb-3">
+        {{ updateForm.Prix.label(class="form-label") }}
+        {{ updateForm.Prix(class="form-control") }}
+    </div>
+    <button type="submit" class="btn btn-success">Sauvegarder</button>
+    <a href="{{ url_for('viewLivre', idL=selectedLivre.idL) }}" class="btn btn-secondary">Annuler</a>
+</form>
+{% endblock %}
