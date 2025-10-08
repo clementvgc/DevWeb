@@ -54,6 +54,27 @@ Ajout d'une fonction pour sauvegarder les modifications d'un auteur et d'une aut
 Création de auteur_view.html
 Ajout de plusieurs fonctions dans views.py et création/modification de plusieurs teamplates
 On a désormais la possibilité de voir, éditer et supprimer des auteurs
-Possiblilité de voir et éditer les livres
+Possibilité de voir et éditer les livres
+Fin TP5
+
+# Séance 6 :
+TP6
+Ajout de la classe User dans models.py
+Ajout de la fonction syncdb dans commands.py
+Ajout de commandes pour créer un utilisateur et changer son mot de passe dans commands.py
+Modification de app.py pour activer le plugin
+Ajout de code dans models.py 
+Création d'un formulaire pour permettre à un utilisateur de s’authentifier dans forms.py
+Création de login.html
+Modification de base.html pour que l'utilisateur sache qu'il est connecté
+Ajout d'une vue logout pour que la déconnexion fonctionne dans views.py
+Modification de auteur_list.html pour que la page d'édition et de suppression soit accessible que aux utilisateurs authentifiés
+Ajout de @login_required devant toutes les vues qui ne sont pas fait pour consulter
+Mise en place de la redirection automatique dans app.py
+Ajout d'une ligne dans la classe LoginForm dans forms.py et modification de la vue login dans views.py pour se souvenir de la page précédente
+Fin TP6
+TP7
+Création de conftest.py
+Création du répertoire unit avec les fichiers __init__.py et test_models_auteur.py
 
 

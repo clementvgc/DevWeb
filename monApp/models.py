@@ -1,4 +1,5 @@
-from .app import db
+from .app import db, login_manager
+from flask_login import UserMixin
 
 class Auteur(db.Model):
     idA = db.Column( db.Integer, primary_key=True)
@@ -24,3 +25,14 @@ class Livre(db.Model):
         self.auteur_id = auteur_id
     def __repr__ (self ):
         return "<Livre (%d) %s>" % (self.idL , self.Titre)
+
+class User(db.Model, UserMixin):
+    Login = db.Column(db.String(50), primary_key=True)
+    Password = db.Column(db.String(64))
+    
+    def get_id(self):
+        return self.Login
+
+@login_manager.user_loader
+def load_user(username):
+    return User.query.get(username)
