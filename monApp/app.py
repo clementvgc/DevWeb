@@ -3,7 +3,7 @@ from flask_bootstrap5 import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 
-app = Flask (__name__)
+app = Flask(__name__)
 Bootstrap(app)
 # Config options - Make sure you created a 'config.py' file.
 app.config.from_object('config')

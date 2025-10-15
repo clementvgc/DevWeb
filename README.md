@@ -77,4 +77,7 @@ TP7
 Création de conftest.py
 Création du répertoire unit avec les fichiers __init__.py et test_models_auteur.py
 
+# Séance 7 :
+
+
 
