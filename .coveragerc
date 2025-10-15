@@ -1,5 +1,5 @@
 [run]
-omit =
+source = monApp
+omit = 
     */tests/*
-    */__init__.py
-    */config.py
+    monApp/__init__.py

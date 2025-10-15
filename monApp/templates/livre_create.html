@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block main %}
+    <h1>Ajouter un nouveau livre</h1>
+    <form role="form" method="POST" action="{{ url_for('insertLivre') }}">
+        {{ createForm.hidden_tag() }}
+
+        {# Champ Titre #}
+        <div class="form-group mb-3 {% if createForm.Titre.errors %}has-error{% endif %}">
+            {{ createForm.Titre.label(class="form-label") }}
+            {{ createForm.Titre(class="form-control") }}
+            {% if createForm.Titre.errors %}
+                <ul class="list-group mt-2">
+                    {% for e in createForm.Titre.errors %}
+                        <li class="list-group-item list-group-item-danger">{{ e }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        {# Champ Prix #}
+        <div class="form-group mb-3 {% if createForm.Prix.errors %}has-error{% endif %}">
+            {{ createForm.Prix.label(class="form-label") }}
+            {{ createForm.Prix(class="form-control") }}
+            {% if createForm.Prix.errors %}
+                <ul class="list-group mt-2">
+                    {% for e in createForm.Prix.errors %}
+                        <li class="list-group-item list-group-item-danger">{{ e }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        {# Champ URL #}
+        <div class="form-group mb-3 {% if createForm.Url.errors %}has-error{% endif %}">
+            {{ createForm.Url.label(class="form-label") }}
+            {{ createForm.Url(class="form-control") }}
+            {% if createForm.Url.errors %}
+                <ul class="list-group mt-2">
+                    {% for e in createForm.Url.errors %}
+                        <li class="list-group-item list-group-item-danger">{{ e }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        {# Champ Image #}
+        <div class="form-group mb-3 {% if createForm.Img.errors %}has-error{% endif %}">
+            {{ createForm.Img.label(class="form-label") }}
+            {{ createForm.Img(class="form-control") }}
+            {% if createForm.Img.errors %}
+                <ul class="list-group mt-2">
+                    {% for e in createForm.Img.errors %}
+                        <li class="list-group-item list-group-item-danger">{{ e }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        {# Champ Auteur (SelectField) #}
+        <div class="form-group mb-3 {% if createForm.auteur_id.errors %}has-error{% endif %}">
+            {{ createForm.auteur_id.label(class="form-label") }}
+            {{ createForm.auteur_id(class="form-select") }}
+            {% if createForm.auteur_id.errors %}
+                <ul class="list-group mt-2">
+                    {% for e in createForm.auteur_id.errors %}
+                        <li class="list-group-item list-group-item-danger">{{ e }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        <input class="btn btn-success" type="submit" value="Créer le livre">
+        <a href="{{ url_for('getLivres') }}" class="btn btn-secondary">Retour</a>
+    </form>
+{% endblock %}

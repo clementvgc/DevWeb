@@ -24,8 +24,8 @@ def testapp():
 
         # Ajouter un utilisateur de test
         m = sha256()
-        m.update("password".encode())
-        user = User(Login="testuser", Password=m.hexdigest())
+        m.update("AIGRE".encode())
+        user = User(Login="CDAL", Password=m.hexdigest())
         db.session.add(user)
 
         db.session.commit()

@@ -4,6 +4,7 @@ from wtforms.validators import DataRequired
 from .models import User
 from hashlib import sha256
 
+
 class FormAuteur(FlaskForm):
     idA = HiddenField('idA')
     Nom = StringField('Nom', validators=[DataRequired()])

@@ -1,3 +1,4 @@
+from monApp.app import app
 from monApp.models import Auteur
 
 def test_auteur_init():

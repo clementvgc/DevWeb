@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block main %}
+<h1>Supprimer le livre "{{ selectedLivre.Titre }}" ?</h1>
+<p>Êtes-vous sûr de vouloir supprimer ce livre ? Cette action est irréversible.</p>
+<form role="form" method="POST" action="{{ url_for('eraseLivre') }}">
+    {{ deleteForm.hidden_tag() }}
+    <input class="btn btn-danger" type="submit" value="Confirmer la suppression">
+    <a href="{{ url_for('getLivres') }}" class="btn btn-secondary">Annuler</a>
+</form>
+{% endblock %}

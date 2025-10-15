@@ -78,6 +78,15 @@ Création de conftest.py
 Création du répertoire unit avec les fichiers __init__.py et test_models_auteur.py
 
 # Séance 7 :
+Création du fichier .coveragerc
+Création de test_models_livres.py et test_models_user.py
+Création du répertoire functional dans tests/ avec un fichier __init__.py vide et test_routes_auteur.py
+Ajout dans test_routes_auteur.py de tous les tests nécessaire pour tester toutes les routes en référence avec auteur
+Création de test_forms_auteur.py et ajout de tests dedans permettant de tester les méthodes POST pour auteur
+Ensuite, j'ai fait la même chose pour les livres en créant les fichiers test_routes_livres.py et test_forms_livres.py
+Et pareil pour les méthodes diverses tels que index, about, contact et logout dans test_routes_misc.py
+
+
 
 
 
