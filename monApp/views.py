@@ -48,13 +48,14 @@ def updateAuteur(idA):
 @app.route ('/auteur/save/', methods =("POST" ,))
 @login_required
 def saveAuteur():
-    updatedAuteur = None
-    unForm = FormAuteur()
-    idA = int(unForm.idA.data)
+    idA = int(request.form['idA'])
     updatedAuteur = Auteur.query.get(idA)
+    unForm = FormAuteur(request.form)
+
     if unForm.validate_on_submit():
         updatedAuteur.Nom = unForm.Nom.data
         db.session.commit()
+        flash(f"L'auteur '{updatedAuteur.Nom}' a été mis à jour.", 'success')
         return redirect(url_for('viewAuteur', idA=updatedAuteur.idA))
 
     return render_template("auteur_update.html",selectedAuteur=updatedAuteur, updateForm=unForm)
@@ -100,9 +101,7 @@ def deleteAuteur(idA):
 @app.route ('/auteur/erase/', methods =("POST" ,))
 @login_required
 def eraseAuteur():
-    deletedAuteur = None
-    unForm = FormAuteur()
-    idA = int(unForm.idA.data)
+    idA = int(request.form['idA'])
     deletedAuteur = Auteur.query.get(idA)
     
     if deletedAuteur.livres.count() > 0:
