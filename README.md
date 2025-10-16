@@ -95,6 +95,18 @@ Dorénavant, 2 livres ne peuvent pas avoir le même nom et 2 auteurs aussi
 Modification de models.py, des fonctions insertAuteur, insertLivre dans views.py et base.html
 Réécriture des tests pour qu'il refonctionne
 
+# Ensemble des tests :
+
+(venv) o22401350@or-iut-i002-f29:~/TutoFlask/DevWeb$ coverage report -m
+Name                 Stmts   Miss  Cover   Missing
+--------------------------------------------------
+monApp/app.py           11      0   100%
+monApp/commands.py      56     38    32%   13-43, 48-49, 56-63, 70-80
+monApp/forms.py         27      1    96%   28
+monApp/models.py        34      0   100%
+monApp/views.py        178     24    87%   24, 33, 59-65, 88-89, 96, 108-118, 148, 168-169, 179, 221
+--------------------------------------------------
+TOTAL                  306     63    79%
 
 
 

@@ -52,6 +52,10 @@ def saveAuteur():
     updatedAuteur = Auteur.query.get(idA)
     unForm = FormAuteur(request.form)
 
+    if not updatedAuteur:
+        flash(f"L'auteur avec l'ID {idA} n'existe pas.", 'danger')
+        return redirect(url_for('getAuteurs'))
+
     if unForm.validate_on_submit():
         updatedAuteur.Nom = unForm.Nom.data
         db.session.commit()
