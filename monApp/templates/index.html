@@ -1,11 +1,12 @@
 {% extends "base.html" %}
 
 {% block main %}
-<body>
-    <h1>Bienvenu {{name}} !!</h1>
-    <a href="{{ url_for('about') }}">About</a>
-    <a href="{{ url_for('contact') }}">Contact</a>
-    <a href="{{ url_for('getAuteurs') }}">Auteurs</a>
-    <a href="{{ url_for('getLivres') }}">Livres</a>
-</body >
+    <body>
+        {% if current_user.is_authenticated %}
+            <h1>Bienvenue {{ current_user.Login }} !!</h1>
+        {% else %}
+            <h1>Bienvenue !!</h1>
+        {% endif %}
+        
+    </body>
 {% endblock %}

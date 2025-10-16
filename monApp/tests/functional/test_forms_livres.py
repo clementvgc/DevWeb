@@ -36,7 +36,7 @@ def test_livre_insert_success(client, testapp):
                                "Prix": "12.50",
                                "Url": "http://example.com/20000",
                                "Img": "image2.jpg",
-                               "auteur_id": 1  # ID de Victor Hugo
+                               "auteur_id": 1
                            },
                            follow_redirects=True)
 
@@ -49,15 +49,15 @@ def test_livre_insert_success(client, testapp):
         assert nouveau_livre.Prix == 12.50
 
 def test_livre_erase_success(client, testapp):
+    login(client, "CDAL", "AIGRE", "/livre/erase/")
+
     with testapp.app_context():
         auteur = db.session.get(Auteur, 1)
-        livre_a_supprimer = Livre(Titre="Livre a effacer", Prix=1.0, Url="url", Img="img", auteur_id=auteur.idA)
+        livre_a_supprimer = Livre(Titre="Livre a effacer", Prix=1.0, Url="url", Img="img", auteur=auteur)
         db.session.add(livre_a_supprimer)
         db.session.commit()
         idL = livre_a_supprimer.idL
-
-    login(client, "CDAL", "AIGRE", "/livre/erase/")
-
+    
     response = client.post("/livre/erase/",
                            data={"idL": idL},
                            follow_redirects=True)

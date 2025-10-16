@@ -86,6 +86,15 @@ Création de test_forms_auteur.py et ajout de tests dedans permettant de tester 
 Ensuite, j'ai fait la même chose pour les livres en créant les fichiers test_routes_livres.py et test_forms_livres.py
 Et pareil pour les méthodes diverses tels que index, about, contact et logout dans test_routes_misc.py
 
+# Hors Séance :
+Ajout des livres que l'auteur a écrit lorsqu'on le consulte
+Modification de auteur_view.html pour faire ça
+Ajout d'une barre de recherche pour chercher un livre ou un auteur
+Modification de auteurs_list.html, livres_list.html, de la fonction getAuteurs et getLivres dans views.py
+Dorénavant, 2 livres ne peuvent pas avoir le même nom et 2 auteurs aussi
+Modification de models.py, des fonctions insertAuteur, insertLivre dans views.py et base.html
+Réécriture des tests pour qu'il refonctionne
+
 
 
 

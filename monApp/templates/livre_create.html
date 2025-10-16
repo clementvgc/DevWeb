@@ -5,7 +5,6 @@
     <form role="form" method="POST" action="{{ url_for('insertLivre') }}">
         {{ createForm.hidden_tag() }}
 
-        {# Champ Titre #}
         <div class="form-group mb-3 {% if createForm.Titre.errors %}has-error{% endif %}">
             {{ createForm.Titre.label(class="form-label") }}
             {{ createForm.Titre(class="form-control") }}
@@ -18,7 +17,6 @@
             {% endif %}
         </div>
 
-        {# Champ Prix #}
         <div class="form-group mb-3 {% if createForm.Prix.errors %}has-error{% endif %}">
             {{ createForm.Prix.label(class="form-label") }}
             {{ createForm.Prix(class="form-control") }}
@@ -31,7 +29,6 @@
             {% endif %}
         </div>
 
-        {# Champ URL #}
         <div class="form-group mb-3 {% if createForm.Url.errors %}has-error{% endif %}">
             {{ createForm.Url.label(class="form-label") }}
             {{ createForm.Url(class="form-control") }}
@@ -44,7 +41,6 @@
             {% endif %}
         </div>
 
-        {# Champ Image #}
         <div class="form-group mb-3 {% if createForm.Img.errors %}has-error{% endif %}">
             {{ createForm.Img.label(class="form-label") }}
             {{ createForm.Img(class="form-control") }}
@@ -57,7 +53,6 @@
             {% endif %}
         </div>
 
-        {# Champ Auteur (SelectField) #}
         <div class="form-group mb-3 {% if createForm.auteur_id.errors %}has-error{% endif %}">
             {{ createForm.auteur_id.label(class="form-label") }}
             {{ createForm.auteur_id(class="form-select") }}

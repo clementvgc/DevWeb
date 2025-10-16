@@ -25,7 +25,6 @@ def loaddb(filename):
             objet = Auteur(Nom=auteur)
             db.session.add(objet)
             lesAuteurs[auteur] = objet
-    db.session.commit()
 
     # Deuxième passe : création de tous les livres
     for livre in lesLivres:
@@ -35,9 +34,10 @@ def loaddb(filename):
             Titre=livre["title"],
             Url=livre["url"],
             Img=livre["img"],
-            auteur_id=auteur.idA
+            auteur=auteur
         )
         db.session.add(objet)
+
     db.session.commit()
 
     lg.warning('Database initialized!')

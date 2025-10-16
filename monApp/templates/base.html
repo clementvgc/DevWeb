@@ -20,7 +20,9 @@
                             <a class="nav-link dropdown-toggle" href="#" id="auteursDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Auteurs</a>
                             <ul class="dropdown-menu" aria-labelledby="auteursDropdown">
                                 <li><a class="dropdown-item" href="{{ url_for('getAuteurs') }}">Liste des auteurs</a></li>
+                                {% if current_user.is_authenticated %}
                                 <li><a class="dropdown-item" href="{{ url_for('createAuteur') }}">Créer un auteur</a></li>
+                                {% endif %}
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
@@ -29,6 +31,11 @@
                                 <li>
                                     <a class="dropdown-item" href="{{ url_for('getLivres') }}">Liste des livres</a>
                                 </li>
+                                {% if current_user.is_authenticated %}
+                                <li>
+                                    <a class="dropdown-item" href="{{ url_for('createLivre') }}">Créer un livre</a>
+                                </li>
+                                {% endif %}
                             </ul>
                         </li>
                         <li class="nav-item">
@@ -58,7 +65,19 @@
         {% endblock %}
 
         {% block content %}
-        <main id="main" role="main" class="container">
+            <main id="main" role="main" class="container">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="container mt-3">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
             {% block main %}{% endblock %}
         </main>
         {% endblock %}

@@ -1,17 +1,13 @@
 from .app import app, db
-from flask import render_template, request, url_for, redirect
+from flask import render_template, request, url_for, redirect, flash
 from monApp.models import Auteur, Livre
 from monApp.forms import FormAuteur, FormLivre, LoginForm
-from flask_login import login_user, logout_user, login_required
+from flask_login import login_user, logout_user, login_required, current_user
 
 @app.route('/')
 @app.route('/index/')
 def index():
-    if len(request.args) == 0:
-        return render_template("index.html", title="Accueil", name="Cricri")
-    else:
-        param_name = request.args.get("name")
-        return render_template("index.html", title="Accueil", name=param_name)
+    return render_template("index.html", title="Accueil")
 
 @app.route('/about/')
 def about():
@@ -23,13 +19,24 @@ def contact():
 
 @app.route('/auteurs/')
 def getAuteurs():
-    lesAuteurs = Auteur.query.all()
-    return render_template('auteurs_list.html', title="R3.01 Dev Web avec Flask", auteurs=lesAuteurs)
+    query = request.args.get('q', '')
+    if query:
+        lesAuteurs = db.session.execute(db.select(Auteur).filter(Auteur.Nom.ilike(f'%{query}%'))).scalars().all()
+    else:
+        lesAuteurs = db.session.execute(db.select(Auteur)).scalars().all()
+    return render_template('auteurs_list.html', title="Liste des Auteurs", auteurs=lesAuteurs, query=query)
 
 @app.route('/livres/')
 def getLivres():
-    lesLivres = Livre.query.all()
-    return render_template('livres_list.html', title="Liste des livres", livres=lesLivres)
+    query = request.args.get('q', '')
+    if query:
+        lesLivres = db.session.execute(
+            db.select(Livre).filter(Livre.Titre.ilike(f'%{query}%'))
+        ).scalars().all()
+    else:
+        lesLivres = db.session.execute(db.select(Livre)).scalars().all()
+        
+    return render_template('livres_list.html', title="Liste des livres", livres=lesLivres, query=query)
 
 @app.route('/auteurs/<idA>/update/')
 @login_required
@@ -43,10 +50,8 @@ def updateAuteur(idA):
 def saveAuteur():
     updatedAuteur = None
     unForm = FormAuteur()
-    #recherche de l'auteur à modifier
     idA = int(unForm.idA.data)
     updatedAuteur = Auteur.query.get(idA)
-    #si les données saisies sont valides pour la mise à jour
     if unForm.validate_on_submit():
         updatedAuteur.Nom = unForm.Nom.data
         db.session.commit()
@@ -69,14 +74,20 @@ def createAuteur():
 @app.route ('/auteur/insert/', methods =("POST" ,))
 @login_required
 def insertAuteur():
-    insertedAuteur = None
     unForm = FormAuteur()
     if unForm.validate_on_submit():
-        insertedAuteur = Auteur(Nom=unForm.Nom.data)
+        nom_auteur = unForm.Nom.data
+        existing_auteur = db.session.execute(db.select(Auteur).filter(Auteur.Nom.ilike(nom_auteur))).scalar_one_or_none()
+        
+        if existing_auteur:
+            flash(f"L'auteur '{nom_auteur}' existe déjà.", 'danger')
+            return redirect(url_for('createAuteur'))
+
+        insertedAuteur = Auteur(Nom=nom_auteur)
         db.session.add(insertedAuteur)
         db.session.commit()
-        insertedId = Auteur.query.count()
-        return redirect(url_for('viewAuteur', idA=insertedId))
+        flash(f"L'auteur '{insertedAuteur.Nom}' a été créé avec succès.", 'success')
+        return redirect(url_for('viewAuteur', idA=insertedAuteur.idA))
     return render_template("auteur_create.html", createForm=unForm)
 
 @app.route('/auteurs/<idA>/delete/')
@@ -91,10 +102,14 @@ def deleteAuteur(idA):
 def eraseAuteur():
     deletedAuteur = None
     unForm = FormAuteur()
-    #recherche de l'auteur à supprimer
     idA = int(unForm.idA.data)
     deletedAuteur = Auteur.query.get(idA)
-    #suppression
+    
+    if deletedAuteur.livres.count() > 0:
+        flash(f"L'auteur '{deletedAuteur.Nom}' et tous ses livres ont été supprimés.", 'warning')
+    else:
+        flash(f"L'auteur '{deletedAuteur.Nom}' a été supprimé.", 'success')
+
     db.session.delete(deletedAuteur)
     db.session.commit()
     return redirect(url_for('getAuteurs'))
@@ -120,12 +135,10 @@ def updateLivre(idL):
 @app.route('/livre/save/', methods=("POST",))
 @login_required
 def saveLivre():
-    updatedLivre = None
-    unForm = FormLivre()
-    unForm.auteur_id.choices = [(a.idA, a.Nom) for a in Auteur.query.all()]
-    idL = int(unForm.idL.data)
+    idL = int(request.form['idL'])
     updatedLivre = Livre.query.get(idL)
-    if unForm.validate_on_submit():
+    unForm = FormLivre(request.form)
+    if unForm.Prix.validate(unForm):
         updatedLivre.Prix = unForm.Prix.data
         db.session.commit()
         return redirect(url_for('viewLivre', idL=updatedLivre.idL))
@@ -141,17 +154,25 @@ def createLivre():
 @app.route('/livre/insert/', methods=("POST",))
 @login_required
 def insertLivre():
-    insertedLivre = None
     unForm = FormLivre()
-    unForm.auteur_id.choices = [(a.idA, a.Nom) for a in Auteur.query.all()]
+    unForm.auteur_id.choices = [(a.idA, a.Nom) for a in db.session.execute(db.select(Auteur).order_by(Auteur.Nom)).scalars()]
     if unForm.validate_on_submit():
-        insertedLivre = Livre(Titre=unForm.Titre.data, Prix=unForm.Prix.data, 
-                             Url=unForm.Url.data, Img=unForm.Img.data, 
-                             auteur_id=unForm.auteur_id.data)
+        titre = unForm.Titre.data
+        auteur_id = unForm.auteur_id.data
+        existing_livre = db.session.execute(db.select(Livre).filter_by(Titre=titre, auteur_id=auteur_id)).scalar_one_or_none()
+
+        if existing_livre:
+            flash(f"Le livre '{titre}' existe déjà pour cet auteur.", 'danger')
+            return redirect(url_for('createLivre'))
+
+        auteur = db.session.get(Auteur, auteur_id)
+        insertedLivre = Livre(Titre=titre, Prix=unForm.Prix.data,
+                             Url=unForm.Url.data, Img=unForm.Img.data,
+                             auteur=auteur)
         db.session.add(insertedLivre)
         db.session.commit()
-        insertedId = Livre.query.count()
-        return redirect(url_for('viewLivre', idL=insertedId))
+        flash(f"Le livre '{insertedLivre.Titre}' a été ajouté avec succès.", 'success')
+        return redirect(url_for('viewLivre', idL=insertedLivre.idL))
     return render_template("livre_create.html", createForm=unForm)
 
 @app.route('/livres/<idL>/delete/')

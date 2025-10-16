@@ -1,12 +1,47 @@
 {% extends "base.html" %}
+
 {% block main %}
-<h1 >Consultation de l'auteur {{ selectedAuteur.Nom }}</h1>
-<form role="form" method="POST" action="">
-    {{ viewForm.hidden_tag () }}
-    <div class="form-group mb-3">
-        {{ viewForm.Nom.label }}
-        {{ viewForm.Nom(size=50, disabled=True, class_="form-control") }}
-    </div>
-    <a href="{{ url_for('getAuteurs') }}" class="btn btn-secondary">Retour</a>
-</form >
+    <h1>Consultation de l'auteur {{ selectedAuteur.Nom }}</h1>
+    <form role="form" method="POST" action="">
+        {{ viewForm.hidden_tag () }}
+        <div class="form-group mb-3">
+            {{ viewForm.Nom.label }}
+            {{ viewForm.Nom(size=50, disabled=True, class_="form-control") }}
+        </div>
+        <a href="{{ url_for('getAuteurs') }}" class="btn btn-secondary">Retour</a>
+    </form>
+
+    <hr>
+
+    <h2>Livres de cet auteur</h2>
+    
+    {% if selectedAuteur.livres.count() > 0 %}
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Titre</th>
+                    <th>Prix</th>
+                    <th>Couverture</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for livre in selectedAuteur.livres %}
+                <tr>
+                    <td><a href="{{ livre.Url }}" target="_blank">{{ livre.Titre }}</a></td>
+                    <td>{{ "%.2f"|format(livre.Prix) }}€</td>
+                    <td><img src="{{ url_for('static', filename='images/' + livre.Img) }}" alt="Couverture de {{ livre.Titre }}" width="50"></td>
+                    <td>
+                        <a href="{{ url_for('viewLivre', idL=livre.idL) }}" class="btn btn-info btn-sm">
+                            Voir
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Cet auteur n'a aucun livre enregistré dans la base de données.</p>
+    {% endif %}
+
 {% endblock %}
